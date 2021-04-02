@@ -1,0 +1,52 @@
+- name: Demo on Play Variables
+  hosts:
+   - all
+  vars:
+    URL: play.example.com
+  tasks:
+    - name: Print URL
+      debug:
+        msg: URL = {{ URL }}
+
+- name: Demo on Task Variables
+  hosts: all
+  tasks:
+    - debug:
+        msg: URL = {{ URL }}
+      vars:
+        URL: tasks.example.com
+      name: Print URL
+
+- name: Demo on CLI Variables
+  hosts: all
+  tasks:
+    - name: Print URL1 var from CLI
+      debug:
+        msg: URL1 = {{ URL1 }}
+
+- name: Demo on Inventory Variables
+  hosts: all
+  tasks:
+    - name: Print URL2 var from INVENTORY
+      debug:
+        msg: URL2 = {{ URL2 }}
+
+- name: Demo variables from a file
+  hosts: all
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Print URL_FILE
+      debug:
+        msg: URL_FILE = {{ URL_FILE }}
+
+- name: Prompt for input
+  hosts: all
+  vars_prompt:
+    - name: URL
+      prompt: Enter URL
+      private: no
+  tasks:
+    - name: Print URL
+      debug:
+        msg: URL = {{ URL }}
